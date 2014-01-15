@@ -28,4 +28,23 @@ module Momentum::OpsWorks
     client.describe_instances(query)[:instances].select { |i| i[:status] == 'online' }
   end
 
+  class Config
+
+    def self.from_stack(client, stack_name, app_name = Momentum.config[:app_base_name])
+      @@configs ||= {}
+      @@configs[[stack_name, app_name]] ||= load_from_stack(client, stack_name, app_name)
+    end
+
+    private
+
+    def self.load_from_stack(client, stack_name, app_name)
+      stack = Momentum::OpsWorks.get_stack(client, stack_name)
+      JSON.parse(stack[:custom_json])["custom_env"][app_name].tap do |config|
+        # Custom config from OpsWorks doesn't include RAILS_ENV, so add it.
+        config['RAILS_ENV'] = Momentum::OpsWorks.get_app(client, stack, app_name)[:attributes]['RailsEnv']
+      end
+    end
+
+  end
+
 end
