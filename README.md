@@ -42,6 +42,16 @@ Add the given stack's custom configuration values to the current task's ENV. Can
 
     bundle exec rake ow:config:from_env[production] some:migration
 
+### ow:console[to,env,aws_id,aws_secret]
+
+Start a rails console on the given remote OpsWorks stack. Chooses an instance of the _rails-app_ layer by default, or the configured `rails_console_layer` if provided. E.g.:
+
+    bundle exec rake ow:console[production]
+
+For stacks with labels not matching the Rails environment (e.g., _reflection-joey_), provide a 2nd argument with the desired environment:
+
+    bundle exec rake ow:console[joey,staging]
+
 ### ow:cookbooks:update[to,aws_id,aws_secret]
 
 Zip, upload, and propagate custom cookbooks to the given stack. Or, more concisely:
@@ -56,13 +66,13 @@ Zip, upload, and propagate custom cookbooks to the given stack. Or, more concise
 * **app_base_name** - Your app's name. Stacks are assumed to be named like _appbasename-env_ (e.g., _gravity-staging_ or _reflection-joey_).
 * **cookbooks_install_path** - Local path where librarian-chef will install cookbooks. Default: _tmp/cookbooks_
 * **custom_cookbooks_bucket** - Bucket to which custom cookbooks are uploaded. Default: _artsy-cookbooks_
+* **rails_console_layer** - The OpsWorks layer used for SSH-ing and starting a rails console. Default: _rails-app_
 
 
 ## To Do
 
 * git/branch helpers
 * deploy tasks
-* opsworks console tasks
 * Integrate librarian-chef as legit dependency once rails/chef conflicts resolved
 
 
