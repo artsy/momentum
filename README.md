@@ -83,10 +83,5 @@ Trigger an OpsWorks deploy to the given stack. By default, deploys app to all ru
 * Integrate librarian-chef as legit dependency once rails/chef conflicts resolved
 
 
-## Set-up Notes
+&copy; 2014 [Artsy](http://artsy.net). See [LICENSE](LICENSE.txt) for details.
 
-    $ bundle gem momentum
-    $ echo '2.0.0' > momentum/.ruby-version
-    $ echo 'momentum' > momentum/.ruby-gemset
-    $ cd momentum/
-    $ git commit -m"Initial commit - boilerplate gem stuff only"
