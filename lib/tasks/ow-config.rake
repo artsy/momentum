@@ -1,5 +1,7 @@
 namespace :ow do
 
+  require 'momentum/tasks'
+
   desc "Print current configuration values for given stack."
   task :config, [:to, :aws_id, :aws_secret] do |t, args|
     require_credentials!(args)

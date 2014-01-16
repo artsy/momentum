@@ -47,4 +47,43 @@ module Momentum::OpsWorks
 
   end
 
+
+  class Deployer
+    TIMEOUT = 15 * 60  # wait up to 15 minutes
+
+    def initialize(aws_id, aws_secret)
+      @ow = Momentum::OpsWorks.client(aws_id, aws_secret)
+    end
+
+    def deploy!(stack_name, app_name = Momentum.config[:app_base_name])
+      stack = Momentum::OpsWorks.get_stack(@ow, stack_name)
+      app = Momentum::OpsWorks.get_app(@ow, stack, app_name)
+      layers = Momentum::OpsWorks.get_layers(@ow, stack, Momentum.config[:app_layers])
+      instance_ids = layers.inject([]) { |ids, l| ids + Momentum::OpsWorks.get_online_instance_ids(@ow, layer_id: l[:layer_id]) }
+      raise 'No online instances found!' if instance_ids.empty?
+      @ow.create_deployment(
+        stack_id: stack[:stack_id],
+        app_id: app[:app_id],
+        command: { name: 'deploy' },
+        instance_ids: instance_ids
+      )
+    end
+
+    def wait_for_success!(deployment, timeout = TIMEOUT)
+      Timeout.timeout(timeout) do
+        status = @ow.describe_deployments(deployment_ids: [deployment[:deployment_id]])[:deployments].first[:status]
+        $stderr.puts 'Polling deploy status...'
+        while status == 'running'
+          sleep 10
+          status = @ow.describe_deployments(deployment_ids: [deployment[:deployment_id]])[:deployments].first[:status]
+          $stderr.print '.'
+        end
+        raise "Deploy failed (status: #{status})!" unless status == 'successful'
+      end
+      $stderr.puts 'Success!'
+    rescue Timeout::Error
+      raise "Timed out waiting for deploy to succeed after #{timeout} seconds."
+    end
+  end
+
 end
