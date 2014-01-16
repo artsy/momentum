@@ -22,18 +22,34 @@ And then execute:
     $ bundle exec rake momentum:init
 
 
-## Usage
+## Rake Tasks
 
-This gem adds a few useful rake tasks to your project:
+This gem adds a few useful rake tasks to your project. In general, the `aws_id` and `aws_secret` arguments are taken from `AWS_ID` and `AWS_SECRET` ENV variables. The `to` argument can refer to an environment or developer (e.g., _joey_ in the case of _reflection-joey_, or _staging_ in the case of _gravity-staging_). It's assumed that this value can be appended to the `app_base_name` to form the stack name.
 
-    bundle exec rake momentum:init  # Initialize a default librarian-chef config
-    bundle exec rake ow:cookbooks:update[to,aws_id,aws_secret]  # Zip, upload, and propagate custom cookbooks to the given stack
+### momentum:init
 
-In general, the `aws_id` and `aws_secret` arguments are taken from `AWS_ID` and `AWS_SECRET` ENV variables. So this command can be invoked like:
+Initialize a default librarian-chef config.
+
+### ow:config[to,aws_id,aws_secret]
+
+Print the custom configuration values for the given stack. E.g.:
+
+    bundle exec rake ow:config[joey]
+
+### ow:config:from_env[to,aws_id,aws_secret]
+
+Add the given stack's custom configuration values to the current task's ENV. Can be prepended to other rake tasks that depend on the ENV, e.g.:
+
+    bundle exec rake ow:config:from_env[production] some:migration
+
+### ow:cookbooks:update[to,aws_id,aws_secret]
+
+Zip, upload, and propagate custom cookbooks to the given stack. Or, more concisely:
 
     bundle exec rake ow:cookbooks:update[staging]
     # or just:
     bundle exec rake ow:cookbooks:update:staging
+
 
 ## Configuration:
 
