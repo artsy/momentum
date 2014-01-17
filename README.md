@@ -7,7 +7,7 @@ Shared utilities for managing and deploying OpsWorks apps at Artsy.
 
 Add this line to your application's Gemfile, probably in the `:development` group:
 
-    gem 'momentum'
+    gem 'momentum', github: 'artsy/momentum'
 
 In your application's Rakefile, add this line above the `load_tasks` command:
 
