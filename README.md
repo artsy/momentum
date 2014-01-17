@@ -19,6 +19,7 @@ In your application's Rakefile, add this line above the `load_tasks` command:
 And then execute:
 
     $ bundle
+    $ gem install librarian-chef  # ideally this would be in the bundle, but has conflicts
     $ bundle exec rake momentum:init
 
 
