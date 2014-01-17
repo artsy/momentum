@@ -11,9 +11,13 @@ Add this line to your application's Gemfile, probably in the `:development` grou
 
 In your application's Rakefile, add this line above the `load_tasks` command:
 
-    require 'momentum'  # necessary b/c tasks from gems in :development group aren't loaded automatically
-    Momentum.configure do |conf|
-      conf[:app_base_name] = 'your_app_name'
+    begin
+      require 'momentum'  # necessary b/c tasks from gems in :development group aren't loaded automatically
+      Momentum.configure do |conf|
+        conf[:app_base_name] = 'your_app_name'
+      end
+    rescue LoadError
+      # momentum should only be installed in development
     end
 
 And then execute:
