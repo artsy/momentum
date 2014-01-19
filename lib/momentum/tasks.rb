@@ -17,3 +17,8 @@ end
 def cookbooks_zip
   "#{Momentum.config[:cookbooks_install_path]}.zip"
 end
+
+def system!(command)
+  success = system(command)
+  fail "Failed with status #{$?.exitstatus}" unless success
+end

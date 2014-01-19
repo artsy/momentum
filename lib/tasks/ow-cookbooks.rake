@@ -4,18 +4,12 @@ namespace :ow do
     require 'momentum/opsworks'
     require 'momentum/tasks'
 
-    # TODO add dependency on librarian-chef once chef/json conflict resolved
-    # desc "Run librarian-chef install"
-    # task :install do
-    #   `librarian-chef install`
-    # end
-
     desc "Zip the #{Momentum.config[:cookbooks_install_path]} directory into #{Momentum.config[:cookbooks_install_path]}.zip"
     task :zip do
       raise "No cookbooks found at #{Momentum.config[:cookbooks_install_path]}! Run librarian-chef install." unless File.exists?(Momentum.config[:cookbooks_install_path])
       dir = File.dirname(Momentum.config[:cookbooks_install_path])
       base = File.basename(Momentum.config[:cookbooks_install_path])
-      system "rm -f #{cookbooks_zip} && pushd #{dir} && zip -r #{base} #{base} && popd"
+      system! "rm -f #{cookbooks_zip} && pushd #{dir} && zip -r #{base} #{base} && popd"
       $stderr.puts "Zipped cookbooks to #{cookbooks_zip}"
     end
 
@@ -33,7 +27,7 @@ namespace :ow do
     end
 
     desc "Install, zip and upload custom cookbooks, then trigger update_custom_cookbooks command."
-    task :update, [:to, :aws_id, :aws_secret] => [:require_app_base_name, :zip, :upload] do |t, args|
+    task :update, [:to, :aws_id, :aws_secret] => [:require_app_base_name, 'librarian:install', :zip, :upload] do |t, args|
       require_credentials!(args)
 
       ow = Momentum::OpsWorks.client(args[:aws_id], args[:aws_secret])

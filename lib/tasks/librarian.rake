@@ -18,7 +18,13 @@ LIBRARIAN_CHEF_INSTALL__STRIP_DOT_GIT: '1'
     # librarian-chef and rails declare incompatible json dependencies,
     # so librarian-chef must be installed but can't be in the bundle
     Bundler.with_clean_env do
-      system "librarian-chef init"
+      system! "librarian-chef init"
+    end
+  end
+
+  task :install => :require do
+    Bundler.with_clean_env do
+      system! "librarian-chef install"
     end
   end
 
