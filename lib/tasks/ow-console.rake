@@ -19,7 +19,7 @@ namespace :ow do
       (['-i', ENV['AWS_PUBLICKEY']] if ENV['AWS_PUBLICKEY']),
       (['-l', ENV['AWS_USER']] if ENV['AWS_USER']),
       instance[:public_dns],
-      "'sudo su deploy --session-command=\"cd /srv/www/#{Momentum.config[:app_base_name]}/current && RAILS_ENV=#{args[:env] || args[:to]} bundle exec rails console\"'"
+      "'sudo su deploy --c \"cd /srv/www/#{Momentum.config[:app_base_name]}/current && RAILS_ENV=#{args[:env] || args[:to]} bundle exec rails console\"'"
     ].compact.flatten.join(' ')
   end
 
