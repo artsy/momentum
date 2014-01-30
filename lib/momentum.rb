@@ -9,7 +9,7 @@ module Momentum
     custom_cookbooks_bucket: 'artsy-cookbooks',
     rails_console_layer: 'rails-app',
     app_layers: ['rails-app'],
-    webapp_logs_root: '/var/log/apache2/'
+    logs_root: '/var/log/apache2/'
   }
 
   def self.config

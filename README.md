@@ -90,7 +90,7 @@ Execute a tail -f (follow) command against an error or access log file on the gi
 * **cookbooks_install_path** - Local path where librarian-chef will install cookbooks. Default: _tmp/cookbooks_
 * **custom_cookbooks_bucket** - Bucket to which custom cookbooks are uploaded. Default: _artsy-cookbooks_
 * **rails_console_layer** - The OpsWorks layer used for SSH-ing and starting a rails console. Default: _rails-app_
-* **webserver_logs_root** - The root directory for apache or nginx access and error logs. Default: _/var/log/apache2/_
+* **logs_root** - The root directory for apache or nginx access and error logs. Default: _/var/log/apache2/_
 
 
 ## To Do

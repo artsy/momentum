@@ -15,7 +15,7 @@ namespace :ow do
     raise "No online rails-app instances found for #{name} stack!" unless endpoint
 
     $stderr.puts "Starting tail -f remotely... (use Ctrl-D to exit cleanly)"
-    command = "'sudo su deploy -c \"tail -f #{Momentum.config[:webapp_logs_root]}#{Momentum.config[:app_base_name]}-#{args[:log_type] || 'ssl-error'}.log\"'"
+    command = "'sudo su deploy -c \"tail -f #{Momentum.config[:logs_root]}#{Momentum.config[:app_base_name]}-#{args[:log_type] || 'ssl-error'}.log\"'"
     sh Momentum::OpsWorks.ssh_command_to(endpoint,command)
   end
 
