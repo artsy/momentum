@@ -73,6 +73,16 @@ Trigger an OpsWorks deploy to the given stack. By default, deploys app to all ru
     # or just:
     bundle exec rake ow:deploy:staging
 
+### ow:logs[to,log_type,aws_id,aws_secret]
+
+Execute a tail -f (follow) command against an error or access log file on the given remote OpsWorks stack. Default log is 'ssl-error'. Chooses an instance of the _rails-app_ layer. E.g.:
+
+    bundle exec rake ow:logs[staging,access]
+    # or error log
+    bundle exec rake ow:logs[staging,error]
+    # with ssl logs
+    bundle exec rake ow:logs[staging,ssl-error]
+
 ## Configuration:
 
 * **app_base_name** - Your app's name. Stacks are assumed to be named like _appbasename-env_ (e.g., _gravity-staging_ or _reflection-joey_).
@@ -80,12 +90,14 @@ Trigger an OpsWorks deploy to the given stack. By default, deploys app to all ru
 * **cookbooks_install_path** - Local path where librarian-chef will install cookbooks. Default: _tmp/cookbooks_
 * **custom_cookbooks_bucket** - Bucket to which custom cookbooks are uploaded. Default: _artsy-cookbooks_
 * **rails_console_layer** - The OpsWorks layer used for SSH-ing and starting a rails console. Default: _rails-app_
+* **logs_root** - The root directory for apache or nginx access and error logs. Default: _/var/log/apache2/_
 
 
 ## To Do
 
 * git/branch helpers
 * Integrate librarian-chef as legit dependency once rails/chef conflicts resolved
+* Add nginx/unicorn support to rake command for log files
 
 
 &copy; 2014 [Artsy](http://artsy.net). See [LICENSE](LICENSE.txt) for details.

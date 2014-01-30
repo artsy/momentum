@@ -16,6 +16,11 @@ module Momentum::OpsWorks
     client.describe_apps(stack_id: stack[:stack_id])[:apps].detect { |a| a[:name] == app_name }
   end
 
+  # apparently, public_dns is not always set, fallback to elastic_ip (if available!)
+  def self.get_instance_endpoint(instance)
+    instance[:public_dns] || instance[:elastic_ip]
+  end
+
   def self.get_layers(client, stack, layer_names)
     client.describe_layers(stack_id: stack[:stack_id])[:layers].select { |l| layer_names.include?(l[:shortname]) }
   end
@@ -26,6 +31,14 @@ module Momentum::OpsWorks
 
   def self.get_online_instances(client, query = {})
     client.describe_instances(query)[:instances].select { |i| i[:status] == 'online' }
+  end
+
+  def self.ssh_command_to(endpoint, command)
+      [ 'ssh -t -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no',
+        (['-i', ENV['AWS_PUBLICKEY']] if ENV['AWS_PUBLICKEY']),
+        (['-l', ENV['AWS_USER']] if ENV['AWS_USER']),
+        endpoint,
+        command ].compact.flatten.join(' ')
   end
 
   class Config

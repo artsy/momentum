@@ -11,16 +11,12 @@ namespace :ow do
     stack = Momentum::OpsWorks.get_stack(ow, name)
     layer = ow.describe_layers(stack_id: stack[:stack_id])[:layers].detect { |l| l[:shortname] == Momentum.config[:rails_console_layer] }
     instance = Momentum::OpsWorks.get_online_instances(ow, layer_id: layer[:layer_id]).sample
-    raise "No online #{Momentum.config[:rails_console_layer]} instances found for #{name} stack!" unless instance
+    endpoint = Momentum::OpsWorks.get_instance_endpoint(instance)
+    raise "No online #{Momentum.config[:rails_console_layer]} instances found for #{name} stack!" unless endpoint
 
     $stderr.puts "Starting remote console... (use Ctrl-D to exit cleanly)"
-    sh [
-      'ssh -t',
-      (['-i', ENV['AWS_PUBLICKEY']] if ENV['AWS_PUBLICKEY']),
-      (['-l', ENV['AWS_USER']] if ENV['AWS_USER']),
-      instance[:public_dns],
-      "'sudo su deploy --session-command=\"cd /srv/www/#{Momentum.config[:app_base_name]}/current && RAILS_ENV=#{args[:env] || args[:to]} bundle exec rails console\"'"
-    ].compact.flatten.join(' ')
+    command = "'sudo su deploy -c \"cd /srv/www/#{Momentum.config[:app_base_name]}/current && RAILS_ENV=#{args[:env] || args[:to]} bundle exec rails console\"'"
+    sh Momentum::OpsWorks.ssh_command_to(endpoint,command)
   end
 
 end
