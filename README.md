@@ -75,7 +75,7 @@ Trigger an OpsWorks deploy to the given stack. By default, deploys app to all ru
 
 ### ow:logs[to,log_type,aws_id,aws_secret]
 
-Execute a tail -f (follow) command against an error or access log file on the given remote OpsWorks stack. Default log is 'ssl-error'. Works only for apache2/passenger stacks. Chooses an instance of the _rails-app_ layer by default, or the configured `rails_console_layer` if provided. E.g.:
+Execute a tail -f (follow) command against an error or access log file on the given remote OpsWorks stack. Default log is 'ssl-error'. Chooses an instance of the _rails-app_ layer. E.g.:
 
     bundle exec rake ow:logs[staging,access]
     # or error log
@@ -90,6 +90,7 @@ Execute a tail -f (follow) command against an error or access log file on the gi
 * **cookbooks_install_path** - Local path where librarian-chef will install cookbooks. Default: _tmp/cookbooks_
 * **custom_cookbooks_bucket** - Bucket to which custom cookbooks are uploaded. Default: _artsy-cookbooks_
 * **rails_console_layer** - The OpsWorks layer used for SSH-ing and starting a rails console. Default: _rails-app_
+* **webserver_logs_root** - The root directory for apache or nginx access and error logs. Default: _/var/log/apache2/_
 
 
 ## To Do
