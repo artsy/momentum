@@ -16,6 +16,11 @@ In your application's Rakefile, add this line above the `load_tasks` command:
       Momentum.configure do |conf|
         conf[:app_base_name] = 'your_app_name'
       end
+      Momentum.configure_logs do |conf|
+        conf[:access] = '/path/to/access/logs'
+        conf[:error] = '/path/to/error/logs'
+        # etc, for any log file
+      end
     rescue LoadError
       # momentum should only be installed in development
     end
@@ -25,7 +30,6 @@ And then execute:
     $ bundle
     $ gem install librarian-chef  # ideally this would be in the bundle, but has conflicts
     $ bundle exec rake momentum:init
-
 
 ## Rake Tasks
 
@@ -78,6 +82,11 @@ Trigger an OpsWorks deploy to the given stack. By default, deploys app to all ru
 Execute a tail -f (follow) command against an error or access log file on the given remote OpsWorks stack. Default log is 'ssl-error'. Chooses an instance of the _rails-app_ layer. E.g.:
 
     bundle exec rake ow:logs[staging,rails-app1,/srv/www/myapp/shared/log/staging.log]
+
+You can also use named wrapper tasks to avoid specifying paths every time. You must add paths to the log_files config using the configure_logs method, as demonstrated in the installation section of the readme. Then you can call your tasks as follows (the third parameter being the name you specified in config). E.g.:
+
+    bundle exec rake ow:logs:named[staging,rails-app1,ssl_errors]
+    bundle exec rake ow:logs:named[staging,rails-app1,ssl_access]
 
 The log path may include wildcards.
 
