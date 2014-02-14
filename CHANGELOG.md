@@ -1,4 +1,4 @@
-0.0.8 (...)
+0.0.8 (2014-02-14)
 -----
 
 * Add `ow:ssh` task - [@joeyAghion](https://github.com/joeyAghion)
