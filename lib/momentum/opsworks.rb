@@ -33,7 +33,7 @@ module Momentum::OpsWorks
     client.describe_instances(query)[:instances].select { |i| i[:status] == 'online' }
   end
 
-  def self.ssh_command_to(endpoint, command)
+  def self.ssh_command_to(endpoint, command = nil)
       [ 'ssh -t -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no',
         (['-i', ENV['AWS_PUBLICKEY']] if ENV['AWS_PUBLICKEY']),
         (['-l', ENV['AWS_USER']] if ENV['AWS_USER']),

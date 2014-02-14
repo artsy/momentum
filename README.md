@@ -85,6 +85,15 @@ Execute a tail -f (follow) command against an error or access log file on the gi
 
 The log path may include wildcards.
 
+### ow:ssh[to,layer_or_instance,aws_id,aws_secret]
+
+SSH to an OpsWorks instance. If the `layer_or_instance` argument is a layer, an online instance is chosen randomly from the layer. Otherwise, the name of an online instance is expected. E.g.:
+
+    bundle exec rake ow:ssh[staging,memcached]
+    # or...
+    bundle exec rake ow:ssh[staging,rails-app1]
+
+
 ## Configuration:
 
 * **app_base_name** - Your app's name. Stacks are assumed to be named like _appbasename-env_ (e.g., _gravity-staging_ or _reflection-joey_).

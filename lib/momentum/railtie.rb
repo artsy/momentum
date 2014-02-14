@@ -10,6 +10,7 @@ class Momentum::Railtie < ::Rails::Railtie
     load 'tasks/ow-cookbooks.rake'
     load 'tasks/ow-deploy.rake'
     load 'tasks/ow-logs.rake'
+    load 'tasks/ow-ssh.rake'
   end
 
 end

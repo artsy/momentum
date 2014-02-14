@@ -10,12 +10,12 @@ namespace :ow do
     name = stack_name(args[:to])
     stack = Momentum::OpsWorks.get_stack(ow, name)
     instance = Momentum::OpsWorks.get_online_instances(ow, stack_id: stack[:stack_id]).detect{|i| i[:hostname] == args[:instance] }
+    raise "Online instance #{args[:instance]} not found for #{name} stack!" unless instance
     endpoint = Momentum::OpsWorks.get_instance_endpoint(instance)
-    raise "Online instance #{args[:instance]} not found for #{name} stack!" unless endpoint
 
     $stderr.puts "Starting tail -f remotely... (use Ctrl-D to exit cleanly)"
     command = "'sudo su deploy -c \"tail -f #{args[:log_path]}\"'"
-    sh Momentum::OpsWorks.ssh_command_to(endpoint,command)
+    sh Momentum::OpsWorks.ssh_command_to(endpoint, command)
   end
 
 end
