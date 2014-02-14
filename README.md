@@ -27,9 +27,13 @@ And then execute:
     $ bundle exec rake momentum:init
 
 
+## Naming
+
+It's assumed that stacks are named with an app name and modifier, such as _todo-production_. The modifier is usually an environment, but might also be a developer name or some other label, such _todo-joey_.
+
 ## Rake Tasks
 
-This gem adds a few useful rake tasks to your project. In general, the `aws_id` and `aws_secret` arguments are taken from `AWS_ID` and `AWS_SECRET` ENV variables. The `to` argument can refer to an environment or developer (e.g., _joey_ in the case of _reflection-joey_, or _staging_ in the case of _gravity-staging_). It's assumed that this value can be appended to the `app_base_name` to form the stack name.
+This gem adds a few useful rake tasks to your project. By default, the `aws_id` and `aws_secret` arguments are taken from `AWS_ID` and `AWS_SECRET` ENV variables. The `to` argument refers to the modifier mentioned above (e.g., _production_). It's appended to the configured `app_base_name` to form the stack name.
 
 ### momentum:init
 
