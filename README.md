@@ -79,11 +79,9 @@ Trigger an OpsWorks deploy to the given stack. By default, deploys app to all ru
 
 ### ow:logs[to,instance,log_path,aws_id,aws_secret]
 
-Execute a tail -f (follow) command against an error or access log file on the given remote OpsWorks stack. Default log is 'ssl-error'. Chooses an instance of the _rails-app_ layer. E.g.:
+Execute a tail -f (follow) command against a remote log path on the given remote OpsWorks instance and stack. The path may include wildcards. E.g.:
 
     bundle exec rake ow:logs[staging,rails-app1,/srv/www/myapp/shared/log/staging.log]
-
-The log path may include wildcards.
 
 ### ow:ssh[to,layer_or_instance,aws_id,aws_secret]
 
