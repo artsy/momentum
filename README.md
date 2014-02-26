@@ -76,8 +76,8 @@ Trigger an OpsWorks deploy to the given stack. By default, deploys app to all ru
     bundle exec rake ow:deploy[staging]
     # or just:
     bundle exec rake ow:deploy:staging
-    # if you want to trigger database migrations at the same time, add the optional arg
-    bundle exec rake ow:deploy[staging,true]
+    # if you want to trigger database migrations at the same time, add the additional flag
+    bundle exec rake ow:deploy:migrations[staging]
 
 ### ow:logs[to,instance,log_path,aws_id,aws_secret]
 
