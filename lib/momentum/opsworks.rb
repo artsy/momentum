@@ -77,7 +77,7 @@ module Momentum::OpsWorks
       @ow = Momentum::OpsWorks.client(aws_id, aws_secret)
     end
 
-    def deploy!(stack_name, app_name = Momentum.config[:app_base_name])
+    def deploy!(stack_name, migrate_db = false, app_name = Momentum.config[:app_base_name])
       stack = Momentum::OpsWorks.get_stack(@ow, stack_name)
       app = Momentum::OpsWorks.get_app(@ow, stack, app_name)
       layers = Momentum::OpsWorks.get_layers(@ow, stack, Momentum.config[:app_layers])
@@ -86,7 +86,12 @@ module Momentum::OpsWorks
       @ow.create_deployment(
         stack_id: stack[:stack_id],
         app_id: app[:app_id],
-        command: { name: 'deploy' },
+        command: { 
+          name: 'deploy',
+          args: {
+            'migrate' => [migrate_db.to_s]
+          } 
+        },
         instance_ids: instance_ids
       )
     end
