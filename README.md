@@ -69,13 +69,15 @@ Zip, upload, and propagate custom cookbooks to the given stack. Or, more concise
     # or just:
     bundle exec rake ow:cookbooks:update:staging
 
-### ow:deploy[to,aws_id,aws_secret]
+### ow:deploy[to,migrate_db,aws_id,aws_secret]
 
 Trigger an OpsWorks deploy to the given stack. By default, deploys app to all running instances of the _rails-app_ layer, or the list configured in `app_layers`. E.g.:
 
     bundle exec rake ow:deploy[staging]
     # or just:
     bundle exec rake ow:deploy:staging
+    # if you want to trigger database migrations at the same time, add the optional arg
+    bundle exec rake ow:deploy[staging,true]
 
 ### ow:logs[to,instance,log_path,aws_id,aws_secret]
 

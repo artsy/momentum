@@ -10,11 +10,11 @@ namespace :ow do
   end
 
   desc "Deploy to the given OpsWorks stack."
-  task :deploy, [:to, :aws_id, :aws_secret] do |t, args|
+  task :deploy, [:to, :migrate_db, :aws_id, :aws_secret] do |t, args|
     require_credentials!(args)
     deployer = Momentum::OpsWorks::Deployer.new(args[:aws_id], args[:aws_secret])
     name = stack_name(args[:to])
-    deployment = deployer.deploy!(name)
+    deployment = deployer.deploy!(name, args[:migrate_db] || false)
     $stderr.puts "Triggered deployment #{deployment[:deployment_id]} to #{name}..."
     deployer.wait_for_success!(deployment)
   end
