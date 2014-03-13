@@ -1,3 +1,8 @@
+0.0.9 (2014-03-13)
+-----
+
+* Add `ow:deploy:migrations` sub-task - [@ibussieres](https://github.com/ibussieres)
+
 0.0.8 (2014-02-14)
 -----
 
