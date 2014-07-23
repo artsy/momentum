@@ -10,9 +10,11 @@ namespace :ow do
     name = stack_name(args[:to])
     stack = Momentum::OpsWorks.get_stack(ow, name)
     layer = ow.describe_layers(stack_id: stack[:stack_id])[:layers].detect { |l| l[:shortname] == Momentum.config[:rails_console_layer] }
+    raise "No '#{Momentum.config[:rails_console_layer]}' layer found for #{name} stack!" unless layer
     instance = Momentum::OpsWorks.get_online_instances(ow, layer_id: layer[:layer_id]).sample
+    raise "No '#{Momentum.config[:rails_console_layer]}' instances found for #{name} stack!" unless instance
     endpoint = Momentum::OpsWorks.get_instance_endpoint(instance)
-    raise "No online #{Momentum.config[:rails_console_layer]} instances found for #{name} stack!" unless endpoint
+    raise "No online '#{Momentum.config[:rails_console_layer]}' instances found for #{name} stack!" unless endpoint
 
     $stderr.puts "Starting remote console... (use Ctrl-D to exit cleanly)"
     command = "'sudo su deploy -c \"cd /srv/www/#{Momentum.config[:app_base_name]}/current && RAILS_ENV=#{args[:env] || args[:to]} bundle exec rails console\"'"
