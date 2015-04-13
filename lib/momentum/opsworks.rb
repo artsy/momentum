@@ -77,6 +77,27 @@ module Momentum::OpsWorks
       @ow = Momentum::OpsWorks.client(aws_id, aws_secret)
     end
 
+    def execute_recipe!(stack_name, layer, recipe, app_name = Momentum.config[:app_base_name])
+      raise "No recipe provided" unless recipe
+      stack = Momentum::OpsWorks.get_stack(@ow, stack_name)
+      app = Momentum::OpsWorks.get_app(@ow, stack, app_name)
+      layer_names = layer ? [layer] : Momentum.config[:app_layers]
+      layers = Momentum::OpsWorks.get_layers(@ow, stack, layer_names)
+      instance_ids = layers.inject([]) { |ids, l| ids + Momentum::OpsWorks.get_online_instance_ids(@ow, layer_id: l[:layer_id]) }
+      raise 'No online instances found!' if instance_ids.empty?
+      @ow.create_deployment(
+        stack_id: stack[:stack_id],
+        app_id: app[:app_id],
+        command: {
+          name: 'execute_recipes',
+          args: {
+            'recipes' => [recipe.to_s]
+          }
+        },
+        instance_ids: instance_ids
+      )
+    end
+
     def deploy!(stack_name, migrate_db = false, app_name = Momentum.config[:app_base_name])
       stack = Momentum::OpsWorks.get_stack(@ow, stack_name)
       app = Momentum::OpsWorks.get_app(@ow, stack, app_name)
@@ -86,11 +107,11 @@ module Momentum::OpsWorks
       @ow.create_deployment(
         stack_id: stack[:stack_id],
         app_id: app[:app_id],
-        command: { 
+        command: {
           name: 'deploy',
           args: {
             'migrate' => [migrate_db.to_s]
-          } 
+          }
         },
         instance_ids: instance_ids
       )

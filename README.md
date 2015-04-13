@@ -93,6 +93,13 @@ SSH to an OpsWorks instance. If the `layer_or_instance` argument is a layer, an 
     # or...
     bundle exec rake ow:ssh[staging,rails-app1]
 
+### ow:execute_recipe[to,layer,recipe,aws_id,aws_secret]
+
+Execute a Chec recipe on the given layer in the given stack. By default, will execute recipes on all running instances of the _rails-app_ layer, or the list configured in `app_layers`. E.g.:
+
+    bundle exec rake ow:execute_recipe[staging,rails-app,restart_unicorns]
+    # Assuming 'restart_unicorns' is a valid Chef recipe.
+
 
 ## Configuration:
 
