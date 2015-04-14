@@ -1,3 +1,7 @@
+0.0.10 (2014-04-14)
+
+* Add `ow:execute_recipe` task - [@mzikherman](https://github.com/mzikherman)
+
 0.0.9 (2014-03-13)
 -----
 
