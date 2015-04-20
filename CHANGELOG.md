@@ -1,3 +1,7 @@
+0.0.11 (2014-04-20)
+
+* Typo fix for output of execute_recipe task - [@mzikherman](https://github.com/mzikherman)
+
 0.0.10 (2014-04-14)
 
 * Add `ow:execute_recipe` task - [@mzikherman](https://github.com/mzikherman)
