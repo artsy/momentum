@@ -1,7 +1,11 @@
-0.0.12 (2016-01-18)
+0.0.13 (2016-01-18)
 ------
 
 * Force UTF-8 encoding for STDOUT ([#18](https://github.com/artsy/momentum/pull/18))
+
+0.0.12 (2015-06-30)
+------
+
 * Fall back to default when layer argument to execute_recipe task is empty ([#17](https://github.com/artsy/momentum/pull/17))
 
 0.0.11 (2014-04-20)
