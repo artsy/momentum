@@ -117,5 +117,5 @@ Execute a Chec recipe on the given layer in the given stack. By default, will ex
 * Tests
 
 
-&copy; 2014 [Artsy](http://artsy.net). See [LICENSE](LICENSE.txt) for details.
+&copy; 2014-2016 [Artsy](http://artsy.net). See [LICENSE](LICENSE.txt) for details.
 
