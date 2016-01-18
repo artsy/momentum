@@ -1,8 +1,16 @@
+0.0.12 (2016-01-18)
+------
+
+* Force UTF-8 encoding for STDOUT ([#18](https://github.com/artsy/momentum/pull/18))
+* Fall back to default when layer argument to execute_recipe task is empty ([#17](https://github.com/artsy/momentum/pull/17))
+
 0.0.11 (2014-04-20)
+------
 
 * Typo fix for output of execute_recipe task - [@mzikherman](https://github.com/mzikherman)
 
 0.0.10 (2014-04-14)
+------
 
 * Add `ow:execute_recipe` task - [@mzikherman](https://github.com/mzikherman)
 
