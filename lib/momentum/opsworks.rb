@@ -1,7 +1,7 @@
 module Momentum::OpsWorks
 
   def self.client(aws_id, aws_secret)
-    raise "You must specify aws_id and aws_secret!" unless aws_id.present? && aws_secret.present?
+    raise "You must specify aws_id and aws_secret!" if aws_id.nil? || aws_secret.nil?
     require 'aws-sdk'
     AWS::OpsWorks::Client.new(access_key_id: aws_id, secret_access_key: aws_secret)
   end
@@ -16,9 +16,9 @@ module Momentum::OpsWorks
     client.describe_apps(stack_id: stack[:stack_id])[:apps].detect { |a| a[:name] == app_name }
   end
 
-  # apparently, public_dns is not always set, fallback to elastic_ip (if available!)
+  # apparently, public_dns is not always set, fallback to elastic_ip (if available!) else private_dns
   def self.get_instance_endpoint(instance)
-    instance[:public_dns] || instance[:elastic_ip]
+    instance[:public_dns] || instance[:elastic_ip] || instance[:private_dns]
   end
 
   def self.get_layers(client, stack, layer_names)

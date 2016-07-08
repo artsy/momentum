@@ -20,12 +20,16 @@ In your application's Rakefile, add this line above the `load_tasks` command:
       # momentum should only be installed in development
     end
 
-And then execute:
+If you arent's using Rails / don't have access to the `load_tasks` command, you can load all rake tasks by adding `require 'momentum/rake'` to your project's Rakefile.
+
+Finally, execute:
 
     $ bundle
-    $ gem install librarian-chef  # ideally this would be in the bundle, but has conflicts
-    $ bundle exec rake momentum:init
 
+
+## Berkshelf
+
+Momentum uses [Berkshelf](http://berkshelf.com/) to package application cookbooks and expects a `Berksfile` present in the top-level of your project.
 
 ## Naming
 
@@ -34,10 +38,6 @@ It's assumed that stacks are named with an app name and modifier, such as _todo-
 ## Rake Tasks
 
 This gem adds a few useful rake tasks to your project. By default, the `aws_id` and `aws_secret` arguments are taken from `AWS_ID` and `AWS_SECRET` ENV variables. The `to` argument refers to the modifier mentioned above (e.g., _production_). It's appended to the configured `app_base_name` to form the stack name.
-
-### momentum:init
-
-Initialize a default librarian-chef config.
 
 ### ow:config[to,aws_id,aws_secret]
 
@@ -63,7 +63,7 @@ For stacks with labels not matching the Rails environment (e.g., _reflection-joe
 
 ### ow:cookbooks:update[to,aws_id,aws_secret]
 
-Zip, upload, and propagate custom cookbooks to the given stack. Or, more concisely:
+Package, upload, and propagate custom cookbooks to the given stack. Or, more concisely:
 
     bundle exec rake ow:cookbooks:update[staging]
     # or just:
@@ -95,7 +95,7 @@ SSH to an OpsWorks instance. If the `layer_or_instance` argument is a layer, an 
 
 ### ow:execute_recipe[to,layer,recipe,aws_id,aws_secret]
 
-Execute a Chec recipe on the given layer in the given stack. By default, will execute recipes on all running instances of the _rails-app_ layer, or the list configured in `app_layers`. E.g.:
+Execute a Checf recipe on the given layer in the given stack. By default, will execute recipes on all running instances of the _rails-app_ layer, or the list configured in `app_layers`. E.g.:
 
     bundle exec rake ow:execute_recipe[staging,rails-app,restart_unicorns]
     # Assuming 'restart_unicorns' is a valid Chef recipe.
@@ -105,7 +105,7 @@ Execute a Chec recipe on the given layer in the given stack. By default, will ex
 
 * **app_base_name** - Your app's name. Stacks are assumed to be named like _appbasename-env_ (e.g., _gravity-staging_ or _reflection-joey_).
 * **app_layers** - Array of OpsWorks layer names to which this rails app should be deployed. Default: `['rails-app']`
-* **cookbooks_install_path** - Local path where librarian-chef will install cookbooks. Default: _tmp/cookbooks_
+* **cookbooks_install_path** - Local path where berkshelf will install cookbooks. Default: _tmp/cookbooks.tar.gz_
 * **custom_cookbooks_bucket** - Bucket to which custom cookbooks are uploaded. Default: _artsy-cookbooks_
 * **rails_console_layer** - The OpsWorks layer used for SSH-ing and starting a rails console. Default: _rails-app_
 
@@ -113,7 +113,6 @@ Execute a Chec recipe on the given layer in the given stack. By default, will ex
 ## To Do
 
 * git/branch helpers
-* Integrate librarian-chef as legit dependency once rails/chef conflicts resolved
 * Tests
 
 
