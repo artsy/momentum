@@ -7,15 +7,11 @@ def require_credentials!(args)
 end
 
 def cookbooks_s3_key(to)
-  "#{stack_name(to)}.zip"
+  "#{stack_name(to)}.tar.gz"
 end
 
 def stack_name(to)
   "#{Momentum.config[:app_base_name]}-#{to}"
-end
-
-def cookbooks_zip
-  "#{Momentum.config[:cookbooks_install_path]}.zip"
 end
 
 def system!(command)

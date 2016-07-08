@@ -1,3 +1,8 @@
+0.1.0 (2016-01-18)
+------
+
+* Update momentum to use Berkshelf and load rake tasks from non-Rails projects ([#19](https://github.com/artsy/momentum/pull/19))  Breaking changes: (1) librarian-chef has been replaced by berkshelf so any Cheffile must be converted to a Berksfile (2) The expected value for `Momentum.config[:cookbooks_install_path]` includes the cookbook package filename, which must be of the type `.tar.gz` i.e. teh default value `cookbooks.tar.gz`
+
 0.0.13 (2016-01-18)
 ------
 
