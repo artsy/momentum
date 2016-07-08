@@ -1,3 +1,8 @@
+0.1.0 (2016-01-18)
+------
+
+* Update momentum to use Berkshelf and load rake tasks from non-Rails projects ([#19](https://github.com/artsy/momentum/pull/19))
+
 0.0.13 (2016-01-18)
 ------
 
