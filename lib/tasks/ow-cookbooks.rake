@@ -4,7 +4,7 @@ namespace :ow do
     require 'momentum/opsworks'
     require 'momentum/tasks'
 
-    desc "Upload custom cookbooks from #{Momentum.config[:cookbooks_install_path]} to S3 (at bucket/appname-env.tar.gz)."
+    desc "Upload custom cookbooks from #{Momentum.config[:cookbooks_install_path]} to S3 (at bucket/appname-env.tgz)."
     task :upload, [:to, :aws_id, :aws_secret] => [:require_app_base_name] do |t, args|
       require_credentials!(args)
       require 'aws-sdk'

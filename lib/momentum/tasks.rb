@@ -7,7 +7,7 @@ def require_credentials!(args)
 end
 
 def cookbooks_s3_key(to)
-  "#{stack_name(to)}.tar.gz"
+  "#{stack_name(to)}.tgz"
 end
 
 def stack_name(to)
