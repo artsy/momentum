@@ -18,16 +18,4 @@ namespace :ow do
     $stderr.puts "Triggered deployment #{deployment[:deployment_id]} to #{name}..."
     deployer.wait_for_success!(deployment)
   end
-
-  namespace :deploy do
-    desc "Deploy to the given OpsWorks stack and tigger database migrations."
-    task :migrations, [:to, :aws_id, :aws_secret] do |t, args|
-      require_credentials!(args)
-      deployer = Momentum::OpsWorks::Deployer.new(args[:aws_id], args[:aws_secret])
-      name = stack_name(args[:to])
-      deployment = deployer.deploy!(name, true)
-      $stderr.puts "Triggered deployment #{deployment[:deployment_id]} and database migrations to #{name}..."
-      deployer.wait_for_success!(deployment)
-    end
-  end
 end

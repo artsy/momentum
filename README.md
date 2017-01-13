@@ -69,21 +69,19 @@ Package, upload, and propagate custom cookbooks to the given stack. Or, more con
     # or just:
     bundle exec rake ow:cookbooks:update:staging
 
-### ow:deploy[to,migrate_db,aws_id,aws_secret]
+### ow:deploy[to,aws_id,aws_secret]
 
 Trigger an OpsWorks deploy to the given stack. By default, deploys app to all running instances of the _rails-app_ layer, or the list configured in `app_layers`. E.g.:
 
     bundle exec rake ow:deploy[staging]
     # or just:
     bundle exec rake ow:deploy:staging
-    # if you want to trigger database migrations at the same time, add the additional flag
-    bundle exec rake ow:deploy:migrations[staging]
 
 ### ow:logs[to,instance,log_path,aws_id,aws_secret]
 
 Execute a tail -f (follow) command against a remote log path on the given remote OpsWorks instance and stack. The path may include wildcards. E.g.:
 
-    bundle exec rake ow:logs[staging,rails-app1,/srv/www/myapp/shared/log/staging.log]
+    bundle exec rake ow:logs[staging,rails-app1,/home/deploy/myapp/shared/log/staging.log]
 
 ### ow:ssh[to,layer_or_instance,aws_id,aws_secret]
 

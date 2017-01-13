@@ -52,19 +52,7 @@ module Momentum::OpsWorks
 
     def self.load_from_stack(client, stack_name, app_name)
       stack = Momentum::OpsWorks.get_stack(client, stack_name)
-      JSON.parse(stack[:custom_json])["custom_env"][app_name].tap do |config|
-
-        # Custom config from OpsWorks doesn't include RAILS_ENV, so add it.
-        config['RAILS_ENV'] = Momentum::OpsWorks.get_app(client, stack, app_name)[:attributes]['RailsEnv']
-
-        # Set MEMCACHE_SERVERS if memcached server configured
-        if (memcached_layer = Momentum::OpsWorks.get_layers(client, stack, ['memcached']).first) &&
-          (memcached_instance = Momentum::OpsWorks.get_online_instances(client, layer_id: memcached_layer[:layer_id]).first)
-          config['MEMCACHE_SERVERS'] = memcached_instance[:private_ip]
-          config['MEMCACHE_SERVERS_PUBLIC'] = Momentum::OpsWorks.get_instance_endpoint(memcached_instance)
-        end
-
-      end
+      JSON.parse(stack[:custom_json])["custom_env"][app_name]
     end
 
   end
@@ -98,7 +86,7 @@ module Momentum::OpsWorks
       )
     end
 
-    def deploy!(stack_name, migrate_db = false, app_name = Momentum.config[:app_base_name])
+    def deploy!(stack_name, app_name = Momentum.config[:app_base_name])
       stack = Momentum::OpsWorks.get_stack(@ow, stack_name)
       app = Momentum::OpsWorks.get_app(@ow, stack, app_name)
       layers = Momentum::OpsWorks.get_layers(@ow, stack, Momentum.config[:app_layers])
@@ -108,10 +96,7 @@ module Momentum::OpsWorks
         stack_id: stack[:stack_id],
         app_id: app[:app_id],
         command: {
-          name: 'deploy',
-          args: {
-            'migrate' => [migrate_db.to_s]
-          }
+          name: 'deploy'
         },
         instance_ids: instance_ids
       )
