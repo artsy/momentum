@@ -11,7 +11,7 @@ module Momentum
     app_layers: ['rails'],
     logs_root: '/var/log/nginx/',
     deploy_root: '/home/deploy',
-    remote_bundle_path: '/usr/local/bin/bundle'
+    append_path: '/usr/local/bin'
   }
 
   def self.config
