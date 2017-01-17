@@ -17,7 +17,7 @@ namespace :ow do
     raise "No online '#{Momentum.config[:rails_console_layer]}' instances found for #{name} stack!" unless endpoint
 
     $stderr.puts "Starting remote console... (use Ctrl-D to exit cleanly)"
-    command = "'sudo su deploy -c \"cd /srv/www/#{Momentum.config[:app_base_name]}/current && RAILS_ENV=#{args[:env] || args[:to]} RUBYOPT=-EUTF-8 bundle exec rails console\"'"
+    command = "'sudo su deploy -c \"cd #{Momentum.config[:deploy_root]}/#{Momentum.config[:app_base_name]}/current && PATH=PATH:#{Momentum.config[:append_path]} RAILS_ENV=#{args[:env] || args[:to]} RUBYOPT=-EUTF-8 bundle exec rails console\"'"
     sh Momentum::OpsWorks.ssh_command_to(endpoint,command)
   end
 

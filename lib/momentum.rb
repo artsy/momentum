@@ -7,9 +7,11 @@ module Momentum
     # app_base_name: ...,  # required
     cookbooks_install_path: 'tmp/cookbooks.tgz',
     custom_cookbooks_bucket: 'artsy-cookbooks',
-    rails_console_layer: 'rails-app',
-    app_layers: ['rails-app'],
-    logs_root: '/var/log/apache2/'
+    rails_console_layer: 'rails',
+    app_layers: ['rails'],
+    logs_root: '/var/log/nginx/',
+    deploy_root: '/home/deploy',
+    append_path: '/usr/local/bin'
   }
 
   def self.config

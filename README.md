@@ -53,7 +53,7 @@ Add the given stack's custom configuration values to the current task's ENV. Can
 
 ### ow:console[to,env,aws_id,aws_secret]
 
-Start a rails console on the given remote OpsWorks stack. Chooses an instance of the _rails-app_ layer by default, or the configured `rails_console_layer` if provided. E.g.:
+Start a rails console on the given remote OpsWorks stack. Chooses an instance of the _rails_ layer by default, or the configured `rails_console_layer` if provided. E.g.:
 
     bundle exec rake ow:console[production]
 
@@ -69,21 +69,19 @@ Package, upload, and propagate custom cookbooks to the given stack. Or, more con
     # or just:
     bundle exec rake ow:cookbooks:update:staging
 
-### ow:deploy[to,migrate_db,aws_id,aws_secret]
+### ow:deploy[to,aws_id,aws_secret]
 
-Trigger an OpsWorks deploy to the given stack. By default, deploys app to all running instances of the _rails-app_ layer, or the list configured in `app_layers`. E.g.:
+Trigger an OpsWorks deploy to the given stack. By default, deploys app to all running instances of the _rails_ layer, or the list configured in `app_layers`. E.g.:
 
     bundle exec rake ow:deploy[staging]
     # or just:
     bundle exec rake ow:deploy:staging
-    # if you want to trigger database migrations at the same time, add the additional flag
-    bundle exec rake ow:deploy:migrations[staging]
 
 ### ow:logs[to,instance,log_path,aws_id,aws_secret]
 
 Execute a tail -f (follow) command against a remote log path on the given remote OpsWorks instance and stack. The path may include wildcards. E.g.:
 
-    bundle exec rake ow:logs[staging,rails-app1,/srv/www/myapp/shared/log/staging.log]
+    bundle exec rake ow:logs[staging,rails1,/home/deploy/myapp/shared/log/staging.log]
 
 ### ow:ssh[to,layer_or_instance,aws_id,aws_secret]
 
@@ -91,23 +89,23 @@ SSH to an OpsWorks instance. If the `layer_or_instance` argument is a layer, an 
 
     bundle exec rake ow:ssh[staging,memcached]
     # or...
-    bundle exec rake ow:ssh[staging,rails-app1]
+    bundle exec rake ow:ssh[staging,rails1]
 
 ### ow:execute_recipe[to,layer,recipe,aws_id,aws_secret]
 
-Execute a Chef recipe on the given layer in the given stack. By default, will execute recipes on all running instances of the _rails-app_ layer, or the list configured in `app_layers`. E.g.:
+Execute a Chef recipe on the given layer in the given stack. By default, will execute recipes on all running instances of the _rails_ layer, or the list configured in `app_layers`. E.g.:
 
-    bundle exec rake ow:execute_recipe[staging,rails-app,restart_unicorns]
+    bundle exec rake ow:execute_recipe[staging,rails,restart_unicorns]
     # Assuming 'restart_unicorns' is a valid Chef recipe.
 
 
 ## Configuration:
 
 * **app_base_name** - Your app's name. Stacks are assumed to be named like _appbasename-env_ (e.g., _gravity-staging_ or _reflection-joey_).
-* **app_layers** - Array of OpsWorks layer names to which this rails app should be deployed. Default: `['rails-app']`
+* **app_layers** - Array of OpsWorks layer names to which this rails app should be deployed. Default: `['rails']`
 * **cookbooks_install_path** - Local path where berkshelf will install cookbooks. Default: _tmp/cookbooks.tgz_
 * **custom_cookbooks_bucket** - Bucket to which custom cookbooks are uploaded. Default: _artsy-cookbooks_
-* **rails_console_layer** - The OpsWorks layer used for SSH-ing and starting a rails console. Default: _rails-app_
+* **rails_console_layer** - The OpsWorks layer used for SSH-ing and starting a rails console. Default: _rails_
 
 
 ## To Do
