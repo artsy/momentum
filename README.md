@@ -51,7 +51,7 @@ Add the given stack's custom configuration values to the current task's ENV. Can
 
     bundle exec rake ow:config:from_env[production] some:migration
 
-### ow:console[to,env,aws_id,aws_secret]
+### ow:console[to,env,aws_id,aws_secret] [env ...]
 
 Start a rails console on the given remote OpsWorks stack. Chooses an instance of the _rails_ layer by default, or the configured `rails_console_layer` if provided. E.g.:
 
@@ -60,6 +60,10 @@ Start a rails console on the given remote OpsWorks stack. Chooses an instance of
 For stacks with labels not matching the Rails environment (e.g., _reflection-joey_), provide a 2nd argument with the desired environment:
 
     bundle exec rake ow:console[joey,staging]
+
+To set environment variables for the remote process, specify them _after_ the task name like you normally would with rake tasks:
+
+    bundle exec rake ow:console[production] SOME_ENV_VARIABLE=set-remotely
 
 ### ow:cookbooks:update[to,aws_id,aws_secret]
 
