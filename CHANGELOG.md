@@ -1,4 +1,4 @@
-0.0.14 ()
+0.0.14 (2017-07-14)
 ------
 
 * Allow user to specify remote env variables for their console session ([24](https://github.com/artsy/momentum/pull/24))
