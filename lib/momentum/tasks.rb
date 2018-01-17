@@ -11,7 +11,11 @@ def cookbooks_s3_key(to)
 end
 
 def stack_name(to)
-  "#{Momentum.config[:app_base_name]}-#{to}"
+  if Momentum.config[:stack_base_name]
+    "#{Momentum.config[:stack_base_name]}-#{to}"
+  else
+    "#{Momentum.config[:app_base_name]}-#{to}"
+  end
 end
 
 def system!(command)

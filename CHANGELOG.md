@@ -2,6 +2,7 @@
 ------
 
 * Allow user to specify remote env variables for their console session ([23](https://github.com/artsy/momentum/pull/23))
+* Add configuration option `stack_base_name` ([25](https://github.com/artsy/momentum/pull/25))
 
 0.1.0 (2016-01-18)
 ------
