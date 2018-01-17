@@ -5,6 +5,7 @@ module Momentum
 
   DEFAULT_CONFIG = {
     # app_base_name: ...,  # required
+    stack_base_name: nil,
     cookbooks_install_path: 'tmp/cookbooks.tgz',
     custom_cookbooks_bucket: 'artsy-cookbooks',
     rails_console_layer: 'rails',

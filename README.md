@@ -105,7 +105,8 @@ Execute a Chef recipe on the given layer in the given stack. By default, will ex
 
 ## Configuration:
 
-* **app_base_name** - Your app's name. Stacks are assumed to be named like _appbasename-env_ (e.g., _gravity-staging_ or _reflection-joey_).
+* **stack_base_name** - Your stack's base name. Stacks are assumed to be named _stackbasename-env_ (e.g., _gravity-staging_ or _reflection-production_).
+* **app_base_name** - Your app's name. If `stack_base_name` is undefined, stacks are assumed to be named _appbasename-env_ (e.g., _gravity-staging_ or _reflection-production_).
 * **app_layers** - Array of OpsWorks layer names to which this rails app should be deployed. Default: `['rails']`
 * **cookbooks_install_path** - Local path where berkshelf will install cookbooks. Default: _tmp/cookbooks.tgz_
 * **custom_cookbooks_bucket** - Bucket to which custom cookbooks are uploaded. Default: _artsy-cookbooks_
