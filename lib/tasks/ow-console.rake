@@ -22,7 +22,7 @@ namespace :ow do
     env << "RUBYOPT=-EUTF-8"
 
     $stderr.puts "Starting remote console... (use Ctrl-D to exit cleanly)"
-    command = "'sudo su deploy -c \"cd #{Momentum.config[:deploy_root]}/#{Momentum.config[:app_base_name]}/current && env #{env.join(" ")} bundle exec rails console\"'"
+    command = "'sudo su - deploy -c \"cd #{Momentum.config[:deploy_root]}/#{Momentum.config[:app_base_name]}/current && env #{env.join(" ")} bundle exec rails console\"'"
     sh Momentum::OpsWorks.ssh_command_to(endpoint,command)
   end
 

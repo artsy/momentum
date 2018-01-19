@@ -14,7 +14,7 @@ namespace :ow do
     endpoint = Momentum::OpsWorks.get_instance_endpoint(instance)
 
     $stderr.puts "Starting tail -f remotely... (use Ctrl-D to exit cleanly)"
-    command = "'sudo su deploy -c \"tail -f #{args[:log_path]}\"'"
+    command = "'sudo su - deploy -c \"tail -f #{args[:log_path]}\"'"
     sh Momentum::OpsWorks.ssh_command_to(endpoint, command)
   end
 
