@@ -1,5 +1,7 @@
 # Momentum
 
+_As of December 2019, Momentum is no longer in use at Artsy and so this gem is unmaintained. Deployment via Opsworks has been deprecated in favor of deployment to [kubernetes](https://kubernetes.io/) with the [hokusai](https://github.com/artsy/hokusai) utility._
+
 Shared utilities for managing and deploying OpsWorks apps at Artsy.
 
 
